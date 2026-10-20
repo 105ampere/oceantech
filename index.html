@@ -62,7 +62,7 @@ h2{font-family:var(--display);font-size:22px;font-weight:700;margin:0;text-wrap:
 .panel.base .stage{aspect-ratio:21/9}
 .grid4 .panel:not(.base) .stage{aspect-ratio:4/3}
 .panel{background:var(--sheet);border:1px solid var(--rule);display:flex;flex-direction:column;min-width:0}
-.panel-head{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--rule)}
+.panel-head{display:flex;align-items:center;gap:12px;padding:10px 16px}
 .tag{font-family:var(--mono);font-size:12px;font-weight:500;border:1.5px solid currentColor;padding:1px 7px;color:var(--ink-2);flex:none}
 .panel.base .tag{color:var(--signal)}
 .panel-head h3{margin:0;font-size:16px;font-weight:600;line-height:1.3}
@@ -196,6 +196,15 @@ figcaption p{margin:0;font-size:14px}
 .vplayer .vbar button:focus-visible{outline:2px solid #fff}
 .vplayer .vbody{aspect-ratio:16/9;max-width:100%}
 .vplayer iframe,.vplayer video{width:100%;height:100%;border:0;display:block;background:#000}
+/* FHD(1920×1080) 한 화면 맞춤: 3D 영역을 화면 높이 기준으로 */
+@media (min-width:761px){
+  .wrap{padding-block:20px 64px}
+  .titleblock + section{margin-top:-30px}
+  .grid4{row-gap:12px}
+  .panel.base .stage{aspect-ratio:auto;height:clamp(240px,33vh,440px)}
+  .grid4 .panel:not(.base) .stage{aspect-ratio:auto;height:clamp(200px,27vh,380px)}
+  .vid-banner{padding:8px 14px}
+}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12.5px;color:var(--ink-2)}
 
 @media (max-width:980px){.cats{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -673,7 +682,12 @@ window.__playVideo=function(body,u){const cands=[u];if(/^videos\//.test(u))cands
   const v=document.createElement('video');v.controls=true;v.playsInline=true;v.preload='auto';let i=0;
   const msg=t=>{body.innerHTML='';const d=document.createElement('div');d.style.cssText='color:#fff;padding:16px;font-size:13px;line-height:1.6';d.textContent=t;body.appendChild(d);};
   v.onerror=()=>{i++;if(i<cands.length){v.src=cands[i];v.load();return;}
-    msg('영상 파일을 불러오지 못했어요. 저장소에 '+cands.join(' 또는 ')+' 파일이 있는지, 파일 이름이 정확한지 확인해 주세요.');};
+    const code=v.error?v.error.code:0;
+    if(location.protocol==='file:'){msg('지금 파일을 더블클릭해서 연 상태예요('+location.pathname.split('/').slice(-2,-1)[0]+' 폴더). 이 폴더 안에 videos 폴더와 그 안의 mitek-rd.mp4가 있는지 확인해 주세요. (오류 코드 '+code+')');return;}
+    Promise.all(cands.map(c=>fetch(c,{method:'HEAD',cache:'no-store'}).then(r=>[c,r.status]).catch(()=>[c,0]))).then(rs=>{
+      const found=rs.find(r=>r[1]===200);
+      if(found)msg('영상 파일('+found[0]+')은 서버에 있는데 이 브라우저가 재생하지 못했어요. 다른 브라우저(크롬)로 열어 보세요. (오류 코드 '+code+')');
+      else msg('서버에서 영상 파일을 찾지 못했어요. 확인한 주소: '+rs.map(r=>new URL(r[0],location.href).href+' → '+(r[1]||'응답 없음')).join(' / ')+'. 저장소에 올라갔는지, 폴더·파일 이름(대소문자 포함)이 맞는지 확인해 주세요.');});};
   v.onloadeddata=()=>{const p=v.play();if(p&&p.catch)p.catch(()=>{v.muted=true;v.play().catch(()=>{});});};
   v.src=cands[0];body.appendChild(v);return v;};
 (function(){const D={A:'videos/mitek-rd.mp4'};document.querySelectorAll('.vid-wrap').forEach(wr=>{const b=wr.querySelector('.vid-banner'),u=D[wr.dataset.vid];
