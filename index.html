@@ -228,7 +228,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12.5px;color:
   </div>
 </header>
 
-<section style="display:flex;flex-direction:column;gap:18px" aria-label="리트로핏 컨셉안">
+<section id="sec-retro" style="display:flex;flex-direction:column;gap:18px" aria-label="리트로핏 컨셉안">
 
   <div class="grid4">
 
@@ -271,7 +271,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12.5px;color:
   </div>
 </section>
 
-<section style="display:flex;flex-direction:column;gap:18px" aria-labelledby="h-firms">
+<section id="sec-firms" style="display:flex;flex-direction:column;gap:18px" aria-labelledby="h-firms">
   <div class="sec-head">
     <h2 id="h-firms">참가 업체 · 카테고리별</h2>
     <p>카드를 누르면 업체별 대표 장비와 상담 내용이 아래에 펼쳐집니다.</p>
@@ -493,10 +493,10 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12.5px;color:
   function prop(g,x,y,z,n,len,m,hubM,wf){wf=wf||.42;var p=new T.Group();p.position.set(x,y,z);g.add(p);
     cyl(p,.3,.3,.6,hubM||m,0,0,0,'x');add(p,new T.ConeGeometry(.3,.45,24),hubM||m,.52,0,0,0,0,-Math.PI/2);
     for(var i=0;i<n;i++){var b=new T.Mesh(bladeGeo(len,len*wf),m);var a=new T.Group();a.rotation.x=i*Math.PI*2/n;b.rotation.y=.5;b.position.y=.2;a.add(b);p.add(a);}return p;}
-  function hullWater(g){add(g,new T.PlaneGeometry(90,40),C.waterBg,4,-20.5,-2.6);}
+  function hullWater(g){add(g,new T.PlaneGeometry(400,40),C.waterBg,4,-20.5,-2.6);add(g,new T.PlaneGeometry(400,200),C.waterDeep,4,-140.4,-2.61);}
   C.waterBg=(function(){var cv=document.createElement('canvas');cv.width=4;cv.height=512;var x=cv.getContext('2d');var gr=x.createLinearGradient(0,0,0,512);
       gr.addColorStop(0,'#e3f2fa');gr.addColorStop(.065,'#c6e3f3');gr.addColorStop(.15,'#9fcde8');gr.addColorStop(.27,'#78b5dc');gr.addColorStop(1,'#6aa7d1');
-      x.fillStyle=gr;x.fillRect(0,0,4,512);var t=new T.CanvasTexture(cv);t.encoding=T.sRGBEncoding;return new T.MeshBasicMaterial({map:t,depthWrite:false});})();C.bed=mat(0x9ea8b3,{r:.85});
+      x.fillStyle=gr;x.fillRect(0,0,4,512);var t=new T.CanvasTexture(cv);t.encoding=T.sRGBEncoding;return new T.MeshBasicMaterial({map:t,depthWrite:false});})();C.bed=mat(0x9ea8b3,{r:.85});C.waterDeep=new T.MeshBasicMaterial({color:new T.Color(0x6aa7d1).convertSRGBToLinear(),depthWrite:false});
   var ENG=[-2.2,3.97,.6];
   var V={
     base:function(g,P){hullWater(g);engine(g);upper130(g);leg(g,C.grey);P.push(prop(g,4.1,-5.9,0,2,1.0,C.bronze));
@@ -575,7 +575,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12.5px;color:
     R.setPixelRatio(Math.min(window.devicePixelRatio||1,2));R.outputEncoding=T.sRGBEncoding;
     var S=new T.Scene();S.add(new T.HemisphereLight(0xffffff,0x8a97a6,.85));
     var d=new T.DirectionalLight(0xffffff,.95);d.position.set(6,10,12);S.add(d);var f=new T.DirectionalLight(0xffffff,.35);f.position.set(-10,3,6);S.add(f);
-    var cam=new T.PerspectiveCamera(30,1.6,.1,200);cam.position.set(-8.5,4.2,24);cam.lookAt(.6,-1.9,0);
+    var cam=new T.PerspectiveCamera(30,1.6,.1,400);cam.position.set(-8.5,4.2,24);cam.lookAt(.6,st.dataset.variant==='base'?-0.7:-1.9,0);
     var g=new T.Group();S.add(g);var P=[];var L=V[st.dataset.variant](g,P);
     var svg=st.querySelector('svg.leaders');var els=L.map(function(l){var s=document.createElement('span');s.className='lbl';s.textContent=l[0];st.appendChild(s);return s;});
     var o={st:st,R:R,S:S,cam:cam,P:P,L:L,els:els,svg:svg,vis:true};
@@ -792,5 +792,13 @@ RD.onValue(RD.ref(db,'.info/connected'),s=>{txt.innerHTML=s.val()?dot(true)+'실
 
 
 
+<script>
+/* 첫 화면에는 제목·리트로핏 3D까지만: 참가 업체 섹션을 화면 아래(스크롤 시)부터 시작 */
+(function(){const r=document.getElementById('sec-retro'),f=document.getElementById('sec-firms');if(!r||!f)return;
+  function fit(){if(innerWidth<761){f.style.marginTop='';return;}f.style.marginTop='0px';
+    const bottom=r.getBoundingClientRect().bottom+scrollY;const gap=40;const need=innerHeight-bottom+8;
+    f.style.marginTop=Math.max(0,need-gap)+'px';}
+  fit();addEventListener('resize',fit);addEventListener('load',fit);})();
+</script>
 </body>
 </html>
