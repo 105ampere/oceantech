@@ -667,12 +667,21 @@ fin.addEventListener('change',async()=>{const f=fin.files&&fin.files[0],slot=pen
   try{txt.innerHTML=dot(true)+'사진 올리는 중…';const u=await shrink(f);if(slot.startsWith('etc:'))api.etcSet(slot.slice(4),'photo',u);else api.putPhoto(slot,u);}catch(e){alert('사진을 불러오지 못했어요');}});
 
 applyTexts();
+
+/* 영상 재생: 경로 후보를 차례로 시도하고, 실패하면 이유를 창 안에 표시 */
+window.__playVideo=function(body,u){const cands=[u];if(/^videos\//.test(u))cands.push(u.replace(/^videos\//,''));
+  const v=document.createElement('video');v.controls=true;v.playsInline=true;v.preload='auto';let i=0;
+  const msg=t=>{body.innerHTML='';const d=document.createElement('div');d.style.cssText='color:#fff;padding:16px;font-size:13px;line-height:1.6';d.textContent=t;body.appendChild(d);};
+  v.onerror=()=>{i++;if(i<cands.length){v.src=cands[i];v.load();return;}
+    msg('영상 파일을 불러오지 못했어요. 저장소에 '+cands.join(' 또는 ')+' 파일이 있는지, 파일 이름이 정확한지 확인해 주세요.');};
+  v.onloadeddata=()=>{const p=v.play();if(p&&p.catch)p.catch(()=>{v.muted=true;v.play().catch(()=>{});});};
+  v.src=cands[0];body.appendChild(v);return v;};
 (function(){const D={A:'videos/mitek-rd.mp4'};document.querySelectorAll('.vid-wrap').forEach(wr=>{const b=wr.querySelector('.vid-banner'),u=D[wr.dataset.vid];
   if(!u){b.classList.add('empty');b.querySelector('.vid-hint').textContent='영상 준비 중';return;}
   b.onclick=()=>{if(window.__openPlayer)return;const w=document.createElement('div');w.className='vplayer';w.style.left='16px';w.style.bottom='16px';w.style.zIndex=70;
     const bar=document.createElement('div');bar.className='vbar';const t=document.createElement('span');t.textContent=wr.dataset.vid+'안 · '+wr.dataset.vname;bar.appendChild(t);
     const x=document.createElement('button');x.type='button';x.textContent='닫기';x.onclick=()=>w.remove();bar.appendChild(x);
-    const body=document.createElement('div');body.className='vbody';const v=document.createElement('video');v.src=u;v.controls=true;v.autoplay=true;v.playsInline=true;body.appendChild(v);
+    const body=document.createElement('div');body.className='vbody';window.__playVideo(body,u);
     w.appendChild(bar);w.appendChild(body);document.body.appendChild(w);};});})();
 
 /* ── Firebase 실시간 연결 ── */
@@ -747,7 +756,7 @@ function openPlayer(k,name,u){if(players[k]){players[k].style.zIndex=++vz;return
   const big=document.createElement('button');big.type='button';big.textContent='크게';big.onclick=()=>{w.classList.toggle('big');big.textContent=w.classList.contains('big')?'작게':'크게';};bar.appendChild(big);
   const body=document.createElement('div');body.className='vbody';const id=ytId(u);
   if(id){const f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id)+'?autoplay=1&rel=0&playsinline=1';f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;f.title=name+' 영상';body.appendChild(f);}
-  else{const v=document.createElement('video');v.src=u;v.controls=true;v.autoplay=true;v.playsInline=true;body.appendChild(v);
+  else{const v=window.__playVideo(body,u);
     if(document.pictureInPictureEnabled){const pip=document.createElement('button');pip.type='button';pip.textContent='화면 밖으로';pip.onclick=()=>v.requestPictureInPicture().catch(()=>{});bar.appendChild(pip);}}
   const x=document.createElement('button');x.type='button';x.textContent='닫기';x.setAttribute('aria-label','영상 닫기');x.onclick=()=>{w.remove();delete players[k];};bar.appendChild(x);
   w.appendChild(bar);w.appendChild(body);document.body.appendChild(w);players[k]=w;
