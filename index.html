@@ -162,6 +162,40 @@ figcaption p{margin:0;font-size:14px}
 [data-photo] img.up{width:100%;height:100%;object-fit:contain;display:block;background:var(--plate)}
 .photo-ctl{position:absolute;right:6px;bottom:6px;display:flex;gap:4px;z-index:2}
 .photo-ctl button{font:inherit;font-size:12px;background:var(--ink);color:var(--sheet);border:0;padding:4px 9px;cursor:pointer}
+.cat .img.etc-img{background:#1f2e4d;display:grid;place-items:center}
+.cat .img.etc-img span{font-family:var(--display);font-weight:700;font-size:clamp(34px,5vw,56px);letter-spacing:.08em;color:#fff}
+.etc-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.add-firm{font:inherit;font-size:14px;font-weight:600;background:var(--ink);color:var(--sheet);border:0;padding:8px 16px;cursor:pointer}
+.add-firm:focus-visible,.etc-del:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
+.etc-empty{margin:0;color:var(--ink-2);font-size:14px}
+.wm-row .etc-del{align-self:flex-start;font:inherit;font-size:12.5px;background:transparent;color:var(--signal);border:1px solid currentColor;padding:3px 10px;cursor:pointer}
+[data-etc]:empty::before{content:attr(data-ph);color:var(--ink-2);opacity:.6}
+.editing [data-etc]{outline:1px dashed color-mix(in srgb,var(--elec) 70%,transparent);outline-offset:2px;cursor:text;border-radius:2px;min-width:3em;display:inline-block}
+.editing [data-etc]:focus{outline:2px solid var(--elec);background:color-mix(in srgb,var(--elec) 8%,transparent)}
+.editing .lead[data-edit],.editing footer[data-edit],.editing .lineup figcaption[data-edit]{max-width:none;display:block;min-height:3.4em;padding:8px 10px;box-sizing:border-box}
+.editing .firm dd[data-edit],.editing .wm-spec dd[data-edit],.editing .wm-spec dd [data-etc]{display:block;min-height:1.8em;padding:2px 6px}
+.editing .wm-spec h4 [data-etc]{min-width:12em}
+/* 장비 영상 배너 · 떠 있는 플레이어 */
+.vid-wrap{display:flex;flex-direction:column}
+.vid-banner{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:10px;width:100%;background:#c62828;color:#fff;padding:10px 14px;font-weight:600;font-size:14px}
+.vid-banner:hover{background:#b71c1c}
+.vid-banner:focus-visible{outline:3px solid var(--ink);outline-offset:-3px}
+.vid-banner .vid-ico{display:inline-grid;place-items:center;width:22px;height:22px;border:1.5px solid #fff;border-radius:50%;font-size:10px;padding-left:2px;box-sizing:border-box}
+.vid-banner .vid-lb{white-space:nowrap}
+.vid-banner .vid-hint{margin-left:auto;font-weight:400;font-size:12px;opacity:.85;white-space:nowrap}
+.vplayer.big{width:min(760px,calc(100vw - 32px))}
+.vid-banner.empty{background:#9e9e9e;cursor:default}
+.vid-edit{display:none;align-items:center;gap:8px;padding:8px 12px;font-size:12.5px;color:var(--ink-2);border-top:1px solid var(--rule)}
+.editing .vid-edit{display:flex}
+.vid-edit input{flex:1;min-width:0;font:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--rule);background:var(--paper);color:var(--ink)}
+.vplayer{position:fixed;z-index:60;width:min(420px,calc(100vw - 32px));background:#111;box-shadow:0 10px 32px rgba(0,0,0,.35);display:flex;flex-direction:column}
+.vplayer.big{width:min(760px,calc(100vw - 32px))}
+.vplayer .vbar{display:flex;align-items:center;gap:6px;background:#c62828;color:#fff;padding:6px 8px 6px 12px;cursor:move;touch-action:none;user-select:none;font-size:13px;font-weight:600}
+.vplayer .vbar span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vplayer .vbar button{font:inherit;font-size:12px;background:rgba(255,255,255,.18);color:#fff;border:0;padding:3px 9px;cursor:pointer}
+.vplayer .vbar button:focus-visible{outline:2px solid #fff}
+.vplayer .vbody{aspect-ratio:16/9;max-width:100%}
+.vplayer iframe,.vplayer video{width:100%;height:100%;border:0;display:block;background:#000}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12.5px;color:var(--ink-2)}
 
 @media (max-width:980px){.cats{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -199,18 +233,30 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12.5px;color:
     <figure class="panel" style="margin:0">
       <div class="panel-head"><span class="tag">A</span><h3><span class="ttl">130S → Mitek RD30 회전 세일드라이브</span><span class="maker">MITEK</span></h3></div>
       <div class="stage" data-variant="mitek"><canvas role="img" aria-label="엔진 유지, 130S를 Mitek 회전 세일드라이브로 교체한 3D 모델"></canvas><svg class="leaders" aria-hidden="true"></svg></div>
+        <div class="vid-wrap" data-vid="A" data-vname="Mitek RD30">
+          <button type="button" class="vid-banner"><span class="vid-ico" aria-hidden="true">▶</span><span class="vid-lb">장비 영상 보기</span><span class="vid-hint">창으로 재생</span></button>
+          <label class="vid-edit">영상 주소 <input type="url" inputmode="url" placeholder="YouTube 링크 또는 mp4 주소를 붙여넣으세요" autocomplete="off"></label>
+        </div>
     </figure>
 
     <!-- 3. Rim Drive -->
     <figure class="panel" style="margin:0">
       <div class="panel-head"><span class="tag">B</span><h3><span class="ttl">러더 자리에 림 조향 POD 설치</span><span class="maker">RIM DRIVE TECHNOLOGY</span></h3></div>
       <div class="stage" data-variant="rim"><canvas role="img" aria-label="엔진과 130S 유지, 러더 자리에 림 조향 POD를 단 3D 모델"></canvas><svg class="leaders" aria-hidden="true"></svg></div>
+        <div class="vid-wrap" data-vid="B" data-vname="Rim Drive 조향 POD">
+          <button type="button" class="vid-banner"><span class="vid-ico" aria-hidden="true">▶</span><span class="vid-lb">장비 영상 보기</span><span class="vid-hint">창으로 재생</span></button>
+          <label class="vid-edit">영상 주소 <input type="url" inputmode="url" placeholder="YouTube 링크 또는 mp4 주소를 붙여넣으세요" autocomplete="off"></label>
+        </div>
     </figure>
 
     <!-- 4. SeaDrive -->
     <figure class="panel" style="margin:0">
       <div class="panel-head"><span class="tag">C</span><h3><span class="ttl">130S → SeaDrive Sailprop + 상부 모터</span><span class="maker">SEADRIVE</span></h3></div>
       <div class="stage" data-variant="seadrive"><canvas role="img" aria-label="엔진 유지, 130S를 SeaDrive 세일드라이브와 상부 모터로 교체한 3D 모델"></canvas><svg class="leaders" aria-hidden="true"></svg></div>
+        <div class="vid-wrap" data-vid="C" data-vname="SeaDrive Sailprop">
+          <button type="button" class="vid-banner"><span class="vid-ico" aria-hidden="true">▶</span><span class="vid-lb">장비 영상 보기</span><span class="vid-hint">창으로 재생</span></button>
+          <label class="vid-edit">영상 주소 <input type="url" inputmode="url" placeholder="YouTube 링크 또는 mp4 주소를 붙여넣으세요" autocomplete="off"></label>
+        </div>
     </figure>
 
   </div>
@@ -233,11 +279,11 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12.5px;color:
     </div>
     <div class="cat" tabindex="0" role="tab" id="t-ac" aria-controls="p-ac" aria-selected="false">
       <span class="img"><svg viewBox="0 0 120 80" aria-hidden="true"><rect class="s-metal" x="14" y="20" width="92" height="46" rx="3"/><circle class="s-metal2" cx="40" cy="43" r="15"/><path class="s-line" d="M40 30 V56 M27 43 H53"/><rect class="s-orange" x="64" y="30" width="32" height="26" rx="2"/><path class="s-line" d="M30 20 V10 H50 M84 20 V12" /></svg><span class="pending">현장 사진 추가 예정</span></span>
-      <span class="txt"><span class="k">MARINE A/C</span><span class="n">Thermowell 외 1곳</span><span class="d">이탈리아 · 해수냉각 에어컨</span></span>
+      <span class="txt"><span class="k">MARINE A/C</span><span class="n">에어컨 2개사</span><span class="d">Thermowell 외 1곳 · 해수냉각</span></span>
     </div>
     <div class="cat" tabindex="0" role="tab" id="t-etc" aria-controls="p-etc" aria-selected="false">
-      <span class="img"><svg viewBox="0 0 120 80" aria-hidden="true"><rect class="s-metal" x="12" y="14" width="40" height="52" rx="3"/><circle class="s-metal2" cx="82" cy="30" r="16"/><rect class="s-elec" x="66" y="52" width="40" height="14" rx="2"/></svg><span class="pending">현장 사진 추가 예정</span></span>
-      <span class="txt"><span class="k">OTHERS</span><span class="n">기타 업체</span><span class="d">업체 목록 입력 예정</span></span>
+      <span class="img etc-img" aria-hidden="true"><span>ETC</span></span>
+      <span class="txt"><span class="k">OTHERS</span><span class="n">기타 업체</span><span class="d">카드를 눌러 업체 추가</span></span>
     </div>
   </div>
 
@@ -278,21 +324,31 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12.5px;color:
 
   <div class="detail" role="tabpanel" id="p-ac" aria-labelledby="t-ac" hidden>
     <h3>선박용 에어컨 · Thermowell과 비교 업체</h3>
-    <p class="lead">Thermowell은 1997년 설립된 이탈리아(레체 주 Surbo) 업체로, 해수냉각식 선박 에어컨을 표준품과 주문 제작품으로 공급합니다.</p>
-    <div class="firms">
-      <div class="firm"><h4><span class="ht">Thermowell</span> <small>ITALY</small></h4>
-        <dl><dt>범위</dt><dd>6,100 ~ 150,000 BTU/h 표준품, 그 이상은 주문 제작</dd><dt>IZY</dt><dd>해수펌프·전장 일체형 DIY 설치 키트</dd><dt>AirJet 12/24</dt><dd>12·24 V DC 직결, 발전기·인버터 없이 구동 (3,700 ~ 11,400 BTU/h)</dd><dt>UB</dt><dd>일체형 직팽식, 8 ~ 18 m 선박용, 7,000 ~ 24,000 BTU/h</dd></dl></div>
-      <div class="firm todo"><h4><span class="ht">비교 업체</span> <small>입력 예정</small></h4><dl><dt>국가</dt><dd>—</dd><dt>대표 장비</dt><dd>—</dd><dt>용량</dt><dd>— BTU/h</dd><dt>차별점</dt><dd>—</dd></dl></div>
+    <p class="lead">해수냉각식 선박 에어컨 업체 두 곳입니다. 업체별로 장비 사진과 사양을 정리했습니다.</p>
+    <div class="wm-list">
+      <article class="wm-row">
+        <div class="wm-photo"><span>장비 사진<br>추가 예정</span></div>
+        <div class="wm-spec">
+          <h4><span class="ht">Thermowell</span> <small>이탈리아</small></h4>
+          <dl><dt>국가</dt><dd>이탈리아 (Surbo, 1997년 설립)</dd><dt>범위</dt><dd>6,100 ~ 150,000 BTU/h 표준품, 그 이상은 주문 제작</dd><dt>IZY</dt><dd>해수펌프·전장 일체형 DIY 설치 키트</dd><dt>AirJet 12/24</dt><dd>12·24 V DC 직결, 발전기·인버터 없이 구동 (3,700 ~ 11,400 BTU/h)</dd><dt>UB</dt><dd>일체형 직팽식, 8 ~ 18 m 선박용, 7,000 ~ 24,000 BTU/h</dd><dt>상담 메모</dt><dd>—</dd></dl>
+        </div>
+      </article>
+      <article class="wm-row">
+        <div class="wm-photo"><span>장비 사진<br>추가 예정</span></div>
+        <div class="wm-spec">
+          <h4><span class="ht">업체명 입력 예정</span> <small>업체 B</small></h4>
+          <dl><dt>국가</dt><dd>—</dd><dt>대표 장비</dt><dd>—</dd><dt>방식</dt><dd>—</dd><dt>용량</dt><dd>— BTU/h</dd><dt>전원</dt><dd>— V</dd><dt>특징</dt><dd>—</dd><dt>상담 메모</dt><dd>—</dd></dl>
+        </div>
+      </article>
     </div>
     <p class="src">참고: <a href="https://www.metstrade.com/products-and-services/thermowell-di-renato-napoli" target="_blank" rel="noopener">METSTRADE 출품 정보</a> · <a href="https://www.nauticexpo.com/soc/thermowell-33490.html" target="_blank" rel="noopener">NauticExpo</a> · <a href="https://pdf.nauticexpo.com/pdf/thermowell/catalogue/33490-115887.html" target="_blank" rel="noopener">Thermowell 카탈로그</a></p>
   </div>
 
   <div class="detail" role="tabpanel" id="p-etc" aria-labelledby="t-etc" hidden>
-    <h3>기타 업체</h3>
+    <div class="etc-head"><h3>기타 업체</h3><button type="button" class="add-firm" id="add-firm" hidden>+ 업체 추가</button></div>
     <p class="lead">위 카테고리에 속하지 않는 상담 업체를 모읍니다.</p>
-    <div class="firms">
-      <div class="firm todo"><h4><span class="ht">업체명</span> <small>입력 예정</small></h4><dl><dt>분야</dt><dd>—</dd><dt>대표 장비</dt><dd>—</dd><dt>메모</dt><dd>—</dd></dl></div>
-    </div>
+    <div class="wm-list" id="etc-list"></div>
+    <p class="etc-empty" id="etc-empty">아직 등록한 업체가 없습니다. ‘+ 업체 추가’를 누르면 업체 카드가 생깁니다.</p>
   </div>
 </section>
 
@@ -562,7 +618,7 @@ const GROUPS=[['h1','.h1-main'],['sub','.h1-sub'],['pt','.panel-head .ttl'],['pm
   ['wh','.wm-spec h4 .ht'],['ws','.wm-spec h4 small'],['wt','.wm-spec dt'],['wd','.wm-spec dd'],
   ['lc','.lineup figcaption'],['ftr','footer']];
 GROUPS.forEach(([k,s])=>document.querySelectorAll(s).forEach((el,i)=>{el.dataset.edit=k+'-'+i;}));
-document.querySelectorAll('.cat .img').forEach((el,i)=>{el.dataset.photo='cat-'+i;});
+document.querySelectorAll('.cat .img:not(.etc-img)').forEach((el,i)=>{el.dataset.photo='cat-'+i;});
 document.querySelectorAll('.wm-photo').forEach((el,i)=>{el.dataset.photo='wm-'+i;});
 document.querySelectorAll('[data-photo]').forEach(el=>{el.dataset.orig=el.innerHTML;});
 
@@ -597,7 +653,7 @@ function onKey(ev){if(ev.key==='Enter'&&!ev.shiftKey){ev.preventDefault();ev.tar
 function setEditing(on){editing=on;labelEls();document.documentElement.classList.toggle('editing',on);editBtn.textContent=on?'편집 끝내기':'편집';editBtn.setAttribute('aria-pressed',on?'true':'false');
   document.querySelectorAll('[data-edit]').forEach(el=>{if(on){try{el.contentEditable='plaintext-only';}catch(e){}if(el.contentEditable!=='plaintext-only')el.contentEditable='true';el.spellcheck=false;el.addEventListener('blur',onBlur);el.addEventListener('keydown',onKey);}
     else{el.removeAttribute('contenteditable');el.removeEventListener('blur',onBlur);el.removeEventListener('keydown',onKey);}});
-  refreshCtl();if(on)document.querySelectorAll('[data-photo]').forEach(addPhotoCtl);}
+  refreshCtl();if(on)document.querySelectorAll('[data-photo]').forEach(addPhotoCtl);if(window.__etcEdit)window.__etcEdit(on);}
 document.addEventListener('click',ev=>{if(editing&&ev.target.closest&&ev.target.closest('.cat [data-edit]'))ev.stopPropagation();},true);
 editBtn.onclick=()=>setEditing(!editing);
 
@@ -608,9 +664,16 @@ function shrink(file){return new Promise((res,rej)=>{const fr=new FileReader();f
   let q=.82,u=c.toDataURL('image/jpeg',q);while(u.length>900000&&q>.4){q-=.12;u=c.toDataURL('image/jpeg',q);}res(u);};im.src=fr.result;};fr.readAsDataURL(file);});}
 fin.addEventListener('change',async()=>{const f=fin.files&&fin.files[0],slot=pendingSlot;if(!f||!slot||!api)return;
   if(!/^image\//.test(f.type)){alert('사진 파일만 올릴 수 있어요');return;}
-  try{txt.innerHTML=dot(true)+'사진 올리는 중…';api.putPhoto(slot,await shrink(f));}catch(e){alert('사진을 불러오지 못했어요');}});
+  try{txt.innerHTML=dot(true)+'사진 올리는 중…';const u=await shrink(f);if(slot.startsWith('etc:'))api.etcSet(slot.slice(4),'photo',u);else api.putPhoto(slot,u);}catch(e){alert('사진을 불러오지 못했어요');}});
 
 applyTexts();
+(function(){const D={A:'videos/mitek-rd.mp4'};document.querySelectorAll('.vid-wrap').forEach(wr=>{const b=wr.querySelector('.vid-banner'),u=D[wr.dataset.vid];
+  if(!u){b.classList.add('empty');b.querySelector('.vid-hint').textContent='영상 준비 중';return;}
+  b.onclick=()=>{if(window.__openPlayer)return;const w=document.createElement('div');w.className='vplayer';w.style.left='16px';w.style.bottom='16px';w.style.zIndex=70;
+    const bar=document.createElement('div');bar.className='vbar';const t=document.createElement('span');t.textContent=wr.dataset.vid+'안 · '+wr.dataset.vname;bar.appendChild(t);
+    const x=document.createElement('button');x.type='button';x.textContent='닫기';x.onclick=()=>w.remove();bar.appendChild(x);
+    const body=document.createElement('div');body.className='vbody';const v=document.createElement('video');v.src=u;v.controls=true;v.autoplay=true;v.playsInline=true;body.appendChild(v);
+    w.appendChild(bar);w.appendChild(body);document.body.appendChild(w);};});})();
 
 /* ── Firebase 실시간 연결 ── */
 const off=m=>{txt.innerHTML=dot(false)+m;editBtn.hidden=true;};
@@ -632,6 +695,73 @@ api={
 };
 RD.onValue(RD.ref(db,ROOT+'/texts'),s=>{const d=s.val();T=d&&typeof d==='object'?d:{};applyTexts();},fail);
 RD.onValue(RD.ref(db,ROOT+'/photos'),s=>{const d=s.val()||{},p={};Object.keys(d).forEach(k=>{if(okImg(d[k]))p[k]=d[k];});P=p;refreshCtl();applyPhotos();},fail);
+
+/* ── 기타 업체: 카드 추가·수정·삭제 (genoa-review/etc/{id}) ── */
+const FIELDS=[['name','업체명'],['origin','국가'],['field','분야'],['equip','대표 장비'],['spec','주요 사양'],['memo','상담 메모']];
+const list=document.getElementById('etc-list'),empty=document.getElementById('etc-empty'),addBtn=document.getElementById('add-firm');
+let ETC={},focusNew=null;
+api.etcSet=(id,k,v)=>{RD.set(RD.ref(db,ROOT+'/etc/'+id+'/'+k),v).then(saved).catch(fail);};
+function etcEditable(el,on){if(on){try{el.contentEditable='plaintext-only';}catch(e){}if(el.contentEditable!=='plaintext-only')el.contentEditable='true';el.spellcheck=false;}else el.removeAttribute('contenteditable');}
+function etcBlur(ev){const el=ev.target,id=el.closest('[data-id]').dataset.id,k=el.dataset.etc;const v=el.textContent.replace(/\u00a0/g,' ').trim();el.textContent=v;
+  if(((ETC[id]||{})[k]||'')!==v)api.etcSet(id,k,v);}
+function etcPhotoCtl(card,on){const ph=card.querySelector('.wm-photo');const old=ph.querySelector('.photo-ctl');if(old)old.remove();const del=card.querySelector('.etc-del');if(del)del.hidden=!on;if(!on)return;
+  const w=document.createElement('span');w.className='photo-ctl';const has=!!ph.querySelector('img.up');
+  const a=document.createElement('button');a.type='button';a.textContent=has?'사진 변경':'사진 추가';a.onclick=e=>{e.preventDefault();pendingSlot='etc:'+card.dataset.id;fin.value='';fin.click();};w.appendChild(a);
+  if(has){const r=document.createElement('button');r.type='button';r.textContent='삭제';r.onclick=e=>{e.preventDefault();api.etcSet(card.dataset.id,'photo',null);};w.appendChild(r);}
+  ph.appendChild(w);}
+function makeCard(id){const a=document.createElement('article');a.className='wm-row';a.dataset.id=id;
+  const ph=document.createElement('div');ph.className='wm-photo';a.appendChild(ph);
+  const sp=document.createElement('div');sp.className='wm-spec';
+  const h4=document.createElement('h4');const nm=document.createElement('span');nm.dataset.etc='name';nm.dataset.ph='업체명';h4.appendChild(nm);sp.appendChild(h4);
+  const dl=document.createElement('dl');FIELDS.slice(1).forEach(([k,lab])=>{const dt=document.createElement('dt');dt.textContent=lab;const dd=document.createElement('dd');const s=document.createElement('span');s.dataset.etc=k;s.dataset.ph='—';dd.appendChild(s);dl.appendChild(dt);dl.appendChild(dd);});sp.appendChild(dl);
+  const del=document.createElement('button');del.type='button';del.className='etc-del';del.textContent='업체 삭제';del.hidden=!editing;
+  del.onclick=()=>{const n=(ETC[id]&&ETC[id].name)||'이 업체';if(confirm(n+' 카드를 삭제할까요? 되돌릴 수 없어요.'))RD.remove(RD.ref(db,ROOT+'/etc/'+id)).then(saved).catch(fail);};sp.appendChild(del);
+  a.appendChild(sp);
+  a.querySelectorAll('[data-etc]').forEach(el=>{el.addEventListener('blur',etcBlur);el.addEventListener('keydown',onKey);});
+  return a;}
+function renderEtc(){const ids=Object.keys(ETC).sort((x,y)=>((ETC[x].at||0)-(ETC[y].at||0)));
+  list.querySelectorAll('article[data-id]').forEach(a=>{if(!ETC[a.dataset.id])a.remove();});
+  ids.forEach(id=>{let a=list.querySelector('article[data-id="'+CSS.escape(id)+'"]');if(!a){a=makeCard(id);}list.appendChild(a);const d=ETC[id];
+    a.querySelectorAll('[data-etc]').forEach(el=>{const v=typeof d[el.dataset.etc]==='string'?d[el.dataset.etc]:'';if(document.activeElement!==el&&el.textContent!==v)el.textContent=v;etcEditable(el,editing);});
+    const ph=a.querySelector('.wm-photo'),cur=ph.querySelector('img.up');
+    if(okImg(d.photo)){if(!cur||cur.src!==d.photo){ph.innerHTML='';const im=document.createElement('img');im.className='up';im.alt='';im.src=d.photo;ph.appendChild(im);}}
+    else if(cur||!ph.firstChild){ph.innerHTML='<span>장비 사진<br>추가 예정</span>';}
+    etcPhotoCtl(a,editing);});
+  empty.hidden=ids.length>0;
+  if(focusNew&&ETC[focusNew]){const el=list.querySelector('article[data-id="'+CSS.escape(focusNew)+'"] [data-etc="name"]');focusNew=null;if(el){el.scrollIntoView({block:'nearest'});el.focus();}}}
+window.__etcEdit=on=>{list.querySelectorAll('[data-etc]').forEach(el=>etcEditable(el,on));list.querySelectorAll('article[data-id]').forEach(a=>etcPhotoCtl(a,on));};
+addBtn.hidden=false;
+addBtn.onclick=()=>{const r=RD.push(RD.ref(db,ROOT+'/etc'));focusNew=r.key;if(!editing)setEditing(true);RD.set(r,{name:'',at:Date.now()}).then(saved).catch(fail);};
+RD.onValue(RD.ref(db,ROOT+'/etc'),s=>{const d=s.val();ETC={};if(d&&typeof d==='object')Object.keys(d).forEach(k=>{if(d[k]&&typeof d[k]==='object')ETC[k]=d[k];});renderEtc();},fail);
+
+/* ── 장비 영상: 빨간 배너 → 떠 있는 플레이어 (여러 개 동시 재생, 끌어서 이동) ── */
+const VID_DEFAULT={A:'videos/mitek-rd.mp4'};const VID={...VID_DEFAULT};const players={};let vz=60,vcount=0;
+function ytId(u){try{const x=new URL(u);if(/(^|\.)youtu\.be$/.test(x.hostname))return x.pathname.slice(1).split('/')[0];
+  if(/(^|\.)youtube(-nocookie)?\.com$/.test(x.hostname)){if(x.searchParams.get('v'))return x.searchParams.get('v');const m=x.pathname.match(/\/(embed|shorts|live)\/([^/?]+)/);if(m)return m[2];}}catch(e){}return null;}
+function vidOk(u){if(typeof u!=='string')return false;if(/^videos\/[\w.-]+\.(mp4|webm)$/i.test(u))return true;if(!/^https:\/\//.test(u))return false;return !!ytId(u)||/\.(mp4|webm|mov)(\?|#|$)/i.test(u);}
+window.__openPlayer=true;
+function openPlayer(k,name,u){if(players[k]){players[k].style.zIndex=++vz;return;}
+  const w=document.createElement('div');w.className='vplayer';w.style.zIndex=++vz;const off=(vcount++%4)*28;
+  w.style.left=(16+off)+'px';w.style.bottom=(16+off)+'px';
+  const bar=document.createElement('div');bar.className='vbar';const t=document.createElement('span');t.textContent=k+'안 · '+name;bar.appendChild(t);
+  const big=document.createElement('button');big.type='button';big.textContent='크게';big.onclick=()=>{w.classList.toggle('big');big.textContent=w.classList.contains('big')?'작게':'크게';};bar.appendChild(big);
+  const body=document.createElement('div');body.className='vbody';const id=ytId(u);
+  if(id){const f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id)+'?autoplay=1&rel=0&playsinline=1';f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;f.title=name+' 영상';body.appendChild(f);}
+  else{const v=document.createElement('video');v.src=u;v.controls=true;v.autoplay=true;v.playsInline=true;body.appendChild(v);
+    if(document.pictureInPictureEnabled){const pip=document.createElement('button');pip.type='button';pip.textContent='화면 밖으로';pip.onclick=()=>v.requestPictureInPicture().catch(()=>{});bar.appendChild(pip);}}
+  const x=document.createElement('button');x.type='button';x.textContent='닫기';x.setAttribute('aria-label','영상 닫기');x.onclick=()=>{w.remove();delete players[k];};bar.appendChild(x);
+  w.appendChild(bar);w.appendChild(body);document.body.appendChild(w);players[k]=w;
+  let sx,sy,ox,oy;bar.addEventListener('pointerdown',e=>{if(e.target.tagName==='BUTTON')return;w.style.zIndex=++vz;const r=w.getBoundingClientRect();sx=e.clientX;sy=e.clientY;ox=r.left;oy=r.top;bar.setPointerCapture(e.pointerId);
+    const mv=ev=>{const nx=Math.max(0,Math.min(innerWidth-80,ox+ev.clientX-sx)),ny=Math.max(0,Math.min(innerHeight-40,oy+ev.clientY-sy));w.style.left=nx+'px';w.style.top=ny+'px';w.style.bottom='auto';};
+    const up=()=>{bar.removeEventListener('pointermove',mv);bar.removeEventListener('pointerup',up);};bar.addEventListener('pointermove',mv);bar.addEventListener('pointerup',up);});}
+function renderVid(){document.querySelectorAll('.vid-wrap').forEach(wr=>{const k=wr.dataset.vid,u=VID[k],b=wr.querySelector('.vid-banner'),inp=wr.querySelector('input');
+  const ok=vidOk(u);b.classList.toggle('empty',!ok);b.querySelector('.vid-hint').textContent=ok?'창으로 재생':'영상 준비 중';b.setAttribute('aria-disabled',ok?'false':'true');
+  if(document.activeElement!==inp)inp.value=typeof u==='string'?u:'';});}
+document.querySelectorAll('.vid-wrap').forEach(wr=>{const k=wr.dataset.vid,inp=wr.querySelector('input');
+  wr.querySelector('.vid-banner').onclick=()=>{const u=VID[k];if(vidOk(u))openPlayer(k,wr.dataset.vname,u);};
+  inp.addEventListener('change',()=>{const v=inp.value.trim();if(v&&!vidOk(v)){txt.innerHTML=dot(false)+'YouTube 링크, https mp4 주소, 또는 videos/파일명.mp4 만 넣을 수 있어요';return;}
+    const r=RD.ref(db,ROOT+'/videos/'+k);(v?RD.set(r,v):RD.remove(r)).then(saved).catch(fail);});});
+RD.onValue(RD.ref(db,ROOT+'/videos'),s=>{const d=s.val()||{};Object.keys(VID).forEach(k=>delete VID[k]);Object.assign(VID,VID_DEFAULT);Object.keys(d).forEach(k=>{if(typeof d[k]==='string')VID[k]=d[k];});renderVid();},fail);
 RD.onValue(RD.ref(db,'.info/connected'),s=>{txt.innerHTML=s.val()?dot(true)+'실시간 연결됨':dot(false)+'연결 끊김 · 다시 연결 중…';});
 })();
 </script>
