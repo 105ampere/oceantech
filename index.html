@@ -219,6 +219,7 @@ figcaption p{margin:0;font-size:14px}
 .co-card .img.photo img,.co-card .img img.up{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:8px;box-sizing:border-box}
 @media (max-width:760px){.co-row{grid-auto-flow:row;grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:480px){.co-row{grid-template-columns:1fr}}
+.stage .mode-chip{position:absolute;left:12px;top:10px;font-size:12.5px;font-weight:600;color:#fff;background:#1f2e4d;padding:4px 10px;pointer-events:none;z-index:2}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12.5px;color:var(--ink-2)}
 
 @media (max-width:980px){.cats{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -296,7 +297,10 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12.5px;color:
         <dl><dt>재질</dt><dd>주요 부품 브론즈. 해수 부식에 강하고 수명이 깁니다.</dd><dt>모듈</dt><dd>상·하부 유닛 표준화. 축, 킬(핀), 고정 브래킷만 바꿔 같은 POD를 모든 용도에 사용합니다.</dd><dt>출력</dt><dd>7.5 kW / 15 kW 모듈형, 부품별 설계는 하나뿐입니다.</dd><dt>환경</dt><dd>저소음·무배출이라 해양보호구역에서도 운항할 수 있습니다.</dd></dl></div>
       <div class="firm"><h4>장착 구성 5가지</h4>
         <dl><dt>①</dt><dd>세일드라이브</dd><dt>②</dt><dd>세일드라이브 + 폴딩 프롭</dd><dt>③</dt><dd>러더 일체 장착 (곳치 등 전통 소형선 · 세일보트)</dd><dt>④</dt><dd>고정 POD, 당김·밀기 추진 모두 가능</dd><dt>⑤</dt><dd>플립 인/아웃 POD (선미 스윔 플랫폼 하부)</dd></dl></div>
-      <div class="firm todo"><h4><span class="ht">박람회 상담 내용</span> <small>입력 예정</small></h4><p>Sailprop 사양, 130S 개구부 호환, 단가·리드타임, 국내 대리점 조건 등 현장 메모를 받아서 채웁니다.</p></div>
+      <div class="firm"><h4><span class="ht" data-edit="co-sd-hy-h">수력 발전 (하이드로제너레이션)</span> <small data-edit="co-sd-hy-s">SeaDrive 자료</small></h4>
+        <dl><dt data-edit="co-sd-hy-t0">발전 최대</dt><dd data-edit="co-sd-hy-v0">POD를 물 흐름 반대쪽(상류)으로 돌리면 프롭이 펼쳐지며 회전해 발전합니다.</dd>
+        <dt data-edit="co-sd-hy-t1">항해 속도 우선</dt><dd data-edit="co-sd-hy-v1">POD를 물 흐름 방향(하류)으로 돌리면 프롭이 접혀 저항이 줄고, 발전은 하지 않습니다.</dd>
+        <dt data-edit="co-sd-hy-t2">핵심</dt><dd data-edit="co-sd-hy-v2">POD 방향만 돌려 범주 중 발전과 최고 속도를 상황에 맞게 고를 수 있습니다.</dd></dl></div>
     </div>
     <p class="src">참고: <a href="https://powertraininternationalweb.com/marine/seadrive-and-saim-confirm-strategic-partnership" target="_blank" rel="noopener">Powertrain International</a> · <a href="https://www.actunautique.com/2023/02/seadrive-le-moteur-pod-electrique-orientable-made-in-norway.html" target="_blank" rel="noopener">ActuNautique</a> · <a href="https://linkedin.com/company/seadrive" target="_blank" rel="noopener">SeaDrive LinkedIn</a></p>
     </div>
@@ -581,7 +585,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12.5px;color:
       x.fillStyle=gr;x.fillRect(0,0,4,512);var t=new T.CanvasTexture(cv);t.encoding=T.sRGBEncoding;return new T.MeshBasicMaterial({map:t,depthWrite:false});})();C.bed=mat(0x9ea8b3,{r:.85});C.waterDeep=new T.MeshBasicMaterial({color:new T.Color(0x6aa7d1).convertSRGBToLinear(),depthWrite:false});
   var ENG=[-2.2,3.97,.6];
   var V={
-    base:function(g,P){hullWater(g);engine(g);upper130(g);leg(g,C.grey);prop(g,4.1,-5.9,0,2,1.0,C.bronze);
+    base:function(g,P){hullWater(g);engine(g);upper130(g);leg(g,C.grey);var spB=prop(g,4.1,-5.9,0,2,1.0,C.bronze);spB.userData.spin=function(o,dt){o.rotation.x+=dt*1.6;};P.push(spB);
       return [['D2-50 디젤 엔진',ENG,-20,-34],['배기 엘보',[1.2,4.15,.5],60,-30],['130S 어퍼 기어 유닛',[LX+.3,-.2,.78],90,-10],['변속 레버',[LX+1.75,1.0,.3],70,-30],['130S 로어 기어 유닛',[1.3,-4.6,.45],-90,10]];},
     mitek:function(g,P){hullWater(g);engine(g);
       /* Mitek RD30 — 제품 사진 형상 기준 (장착 판 제외). 긴 면 = 선수-선미 방향, 컨트롤 패널 = 선미(프롭) 쪽 짧은 면 */
@@ -620,13 +624,13 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12.5px;color:
       [-2.3,-2.53,-2.76].forEach(function(dy){rbox(lgG,.25,.09,.06,.03,C.black,LX+.15,BED+dy,.49);});
       cyl(lgG,.42,.42,.14,C.silver,LX+1.08,PCY,0,'x',28);
       cyl(lgG,.36,.32,.5,C.black,LX+1.4,PCY,0,'x',28);
-      prop(lgG,LX+1.75,PCY,0,2,.62,C.bronze,C.black,.75);
-      rot.userData.spin=function(o,dt){o.rotation.y+=dt*.45;};P.push(rot);
+      var mp=prop(lgG,LX+1.75,PCY,0,2,.62,C.bronze,C.black,.75);
+      rot.userData.spin=function(o,dt){o.rotation.y+=dt*.45;mp.rotation.x+=dt*1.6;};P.push(rot);
       /* 선체 개구부 씰(130S 자리) + 회전 범위 표시 */
       var sl=add(g,new T.CylinderGeometry(1.35,1.4,.16,48),C.rubber,LX,BED+.02,0);sl.scale.set(1.25,1,1);
       add(g,new T.TorusGeometry(1.25,.03,8,64),C.blue,LX,HULL-.6,0,Math.PI/2);
       return [['Mitek RD30 회전 세일드라이브',[MX-.4,HB+1.6,HD/2],60,-40],['130S 개구부에 설치',[LX-1.5,BED+.05,.6],-90,10],['레그 360° 회전',[LX-1.25,HULL-.6,.2],-90,20]];},
-    rim:function(g,P){hullWater(g);engine(g);upper130(g);leg(g,C.grey);prop(g,4.1,-5.9,0,2,1.0,C.bronze);
+    rim:function(g,P){hullWater(g);engine(g);upper130(g);leg(g,C.grey);var sp130=prop(g,4.1,-5.9,0,2,1.0,C.bronze);sp130.userData.spin=function(o,dt){o.rotation.x+=dt*1.6;};P.push(sp130);
       /* Rim Drive 15 kW 조향 POD — 선체 장착형(제품 사진 기준). 러더는 유지, 130S와 러더 사이 선체 바닥에 플레이트로 고정 */
       var PX=5.6,PY=HULL+.32;
       /* 선내: 스테인리스 장착 플레이트(양옆 꺾인 플랜지) */
@@ -655,7 +659,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12.5px;color:
       var rs=new T.Shape();rs.moveTo(-.35,0);rs.lineTo(.75,0);rs.quadraticCurveTo(.85,-1.8,.55,-3.6);rs.lineTo(-.15,-3.7);rs.quadraticCurveTo(-.4,-1.8,-.35,0);
       var rg=new T.ExtrudeGeometry(rs,{depth:.16,bevelEnabled:true,bevelThickness:.05,bevelSize:.05,bevelSegments:3});rg.translate(0,0,-.08);add(g,rg,C.grey,RX,HULL-.05,0);
       return [['130S 세일드라이브 (유지)',[1.3,-4.6,.45],-90,10],['조향 모터·기어 (선내 플레이트)',[PX+.6,PY+.5,.33],70,-45],['림 조향 POD 15 kW · ±160°',[PX,DY-.6,.6],-110,35],['기존 러더 (유지)',[RX+.3,HULL-1.6,.1],60,-10]];},
-    seadrive:function(g,P){hullWater(g);engine(g);
+    seadrive:function(g,P,st){hullWater(g);engine(g);
       /* 130S 어퍼 기어 유닛 자리에 SeaDrive 상부 유닛(기어) + 전기 모터 */
       var fl=add(g,new T.CylinderGeometry(1.35,1.4,.16,48),C.rubber,LX,BED+.08,0);fl.scale.set(1.25,1,1);
       cyl(g,1.05,1.05,.12,C.silver,LX,BED+.22,0,null,40);
@@ -666,11 +670,34 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12.5px;color:
       for(var fi=0;fi<6;fi++)cyl(g,.57,.57,.04,C.greyD,LX,BED+2.0+fi*.15,0,null,32);
       cyl(g,.45,.45,.08,C.greyD,LX,BED+2.88,0,null,32);
       rbox(g,.5,.35,.3,.06,C.black,LX+.75,BED+1.2,.35);tube(g,[[LX+.95,BED+1.25,.4],[LX+1.4,BED+1.4,.3],[LX+1.8,BED+1.7,.1]],.06,C.redW);
-      cyl(g,.42,.5,2.9,C.sd,LX,-3.45,0);
-      var t=add(g,new T.SphereGeometry(1,40,24),C.sd,LX,-5.5,0);t.scale.set(1.9,.62,.62);
-      var n=add(g,new T.SphereGeometry(.3,24,16),C.white,LX-1.82,-5.5,0);n.scale.set(.7,1,1);
-      P.push(prop(g,LX+2.05,-5.5,0,3,.8,C.black,C.sd));
-      return [['전기 모터 (어퍼 기어 위치)',[LX+.5,BED+2.5,.3],80,-40],['SeaDrive 상부 기어 유닛',[LX+.75,BED+1.25,.63],100,0],['선체 플랜지',[LX-1.0,BED+.08,.6],-80,20],['브론즈 하부 유닛',[LX-1.2,-5.6,.5],-80,20]];}
+      /* 회전부: 넥 + 브론즈 토피도 + 폴딩 프롭 — 수직축(LX) 기준으로 방향 전환 */
+      var rot=new T.Group();rot.position.set(LX,0,0);g.add(rot);var R0=new T.Group();R0.position.set(-LX,0,0);rot.add(R0);
+      cyl(R0,.42,.5,2.9,C.sd,LX,-3.45,0);
+      var t=add(R0,new T.SphereGeometry(1,40,24),C.sd,LX,-5.5,0);t.scale.set(1.9,.62,.62);
+      var n=add(R0,new T.SphereGeometry(.3,24,16),C.white,LX-1.82,-5.5,0);n.scale.set(.7,1,1);
+      /* 폴딩 프롭 3날: 날개 뿌리 축(pivot)으로 접힘·펼침 */
+      var pr=new T.Group();pr.position.set(LX+2.05,-5.5,0);R0.add(pr);
+      cyl(pr,.3,.3,.6,C.sd,0,0,0,'x');add(pr,new T.ConeGeometry(.3,.45,24),C.sd,.52,0,0,0,0,-Math.PI/2);
+      var spin=new T.Group();pr.add(spin);var piv=[];
+      for(var bi2=0;bi2<3;bi2++){var arm=new T.Group();arm.rotation.x=bi2*Math.PI*2/3;spin.add(arm);var pv=new T.Group();pv.position.set(.1,.24,0);arm.add(pv);
+        var bl=new T.Mesh(bladeGeo(.8,.8*.42),C.black);bl.rotation.y=.5;pv.add(bl);piv.push(pv);}
+      /* 모드 표시 칩 */
+      var chip=null;if(st){chip=document.createElement('span');chip.className='mode-chip';st.appendChild(chip);}
+      var T0=0,cur='';function setMode(m){if(chip&&cur!==m){cur=m;chip.textContent=m;}}setMode('추진 · 프롭 회전');
+      var ease=function(x){x=Math.max(0,Math.min(1,x));return x*x*(3-2*x);};
+      rot.userData.spin=function(o,dt){T0=(T0+dt)%20;var tt=T0,yaw=0,fold=0,w=0;
+        if(tt<4){yaw=0;fold=0;w=6;setMode('추진 · 프롭 회전');}
+        else if(tt<5.5){yaw=0;fold=ease((tt-4)/1.5);w=6*(1-fold);setMode('범주 · 프롭 접힘 (저항 최소)');}
+        else if(tt<7){yaw=0;fold=1;setMode('범주 · 프롭 접힘 (저항 최소)');}
+        else if(tt<9.5){yaw=Math.PI*ease((tt-7)/2.5);fold=1;setMode('POD 방향 전환 (상류 쪽으로)');}
+        else if(tt<10.5){yaw=Math.PI;fold=1-ease((tt-9.5)/1);w=3*(1-fold);setMode('수력 발전 · 프롭 펼침');}
+        else if(tt<15){yaw=Math.PI;fold=0;w=3;setMode('수력 발전 · 물 흐름으로 회전');}
+        else if(tt<16){yaw=Math.PI;fold=ease(tt-15);w=3*(1-fold);setMode('POD 방향 복귀');}
+        else if(tt<18.5){yaw=Math.PI*(1+ease((tt-16)/2.5));fold=1;setMode('POD 방향 복귀');}
+        else{yaw=0;fold=1-ease((tt-18.5)/1.5);w=6*(1-fold);setMode('추진 · 프롭 회전');}
+        o.rotation.y=yaw;piv.forEach(function(pv){pv.rotation.z=-1.35*fold;});spin.rotation.x+=dt*w*(yaw>1.5&&yaw<4.8?-1:1);};
+      P.push(rot);
+      return [['전기 모터 (어퍼 기어 위치)',[LX+.5,BED+2.5,.3],80,-40],['SeaDrive 상부 기어 유닛',[LX+.75,BED+1.25,.63],100,0],['선체 플랜지',[LX-1.0,BED+.08,.6],-80,20],['브론즈 하부 유닛 · 폴딩 프롭',[LX-1.2,-5.6,.5],-80,20]];}
   };
 
   var scenes=[];
@@ -681,7 +708,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12.5px;color:
     var S=new T.Scene();S.add(new T.HemisphereLight(0xffffff,0x8a97a6,.85));
     var d=new T.DirectionalLight(0xffffff,.95);d.position.set(6,10,12);S.add(d);var f=new T.DirectionalLight(0xffffff,.35);f.position.set(-10,3,6);S.add(f);
     var cam=new T.PerspectiveCamera(30,1.6,.1,400);cam.position.set(-8.5,4.2,24);cam.lookAt(.6,st.dataset.variant==='base'?-0.7:-1.9,0);
-    var g=new T.Group();S.add(g);var P=[];var L=V[st.dataset.variant](g,P);
+    var g=new T.Group();S.add(g);var P=[];var L=V[st.dataset.variant](g,P,st);
     var svg=st.querySelector('svg.leaders');var els=L.map(function(l){var s=document.createElement('span');s.className='lbl';s.textContent=l[0];st.appendChild(s);return s;});
     var o={st:st,R:R,S:S,cam:cam,P:P,L:L,els:els,svg:svg,vis:true};
     o.resize=function(){var w=st.clientWidth,h=st.clientHeight;if(!w||!h)return;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();cam.updateMatrixWorld(true);
