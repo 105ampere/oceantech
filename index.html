@@ -25,7 +25,7 @@ window.FIREBASE_CONFIG={
 :root{
   --paper:#f4f6f8; --sheet:#ffffff; --ink:#14243a; --ink-2:#4a5a70; --rule:#cfd7e2;
   --water:#dce9f3; --water-line:#7fa3c4; --hull:#2b3d55; --metal:#9aa8b8; --metal-2:#c7d0db;
-  --signal:#e2571e; --signal-soft:#fbe4d9; --elec:#1f5aa6; --new:#1f5aa6; --elec-soft:#d7eef0; --bronze:#a8743b;
+  --signal:#1e8a5a; --signal-soft:#dcf1e6; --elec:#1f5aa6; --new:#1f5aa6; --elec-soft:#d7eef0; --bronze:#a8743b;
   --display:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
   --body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
   --plate:#ffffff;
@@ -34,11 +34,11 @@ window.FIREBASE_CONFIG={
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --paper:#0f1722; --sheet:#152132; --ink:#e6edf5; --ink-2:#9fb0c4; --rule:#2a3a50;
   --water:#16304a; --water-line:#4f7ea8; --hull:#b9c8da; --metal:#6d7f95; --metal-2:#3b4c62;
-  --signal:#ff7a42; --signal-soft:#3a2418; --elec:#7aa9e6; --new:#7aa9e6; --elec-soft:#173a40; --bronze:#d39a5c; color-scheme:dark}}
+  --signal:#4cc38a; --signal-soft:#173a2a; --elec:#7aa9e6; --new:#7aa9e6; --elec-soft:#173a40; --bronze:#d39a5c; color-scheme:dark}}
 :root[data-theme="dark"]{
   --paper:#0f1722; --sheet:#152132; --ink:#e6edf5; --ink-2:#9fb0c4; --rule:#2a3a50;
   --water:#16304a; --water-line:#4f7ea8; --hull:#b9c8da; --metal:#6d7f95; --metal-2:#3b4c62;
-  --signal:#ff7a42; --signal-soft:#3a2418; --elec:#7aa9e6; --new:#7aa9e6; --elec-soft:#173a40; --bronze:#d39a5c; color-scheme:dark}
+  --signal:#4cc38a; --signal-soft:#173a2a; --elec:#7aa9e6; --new:#7aa9e6; --elec-soft:#173a40; --bronze:#d39a5c; color-scheme:dark}
 
 body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
 .wrap{max-width:1180px;margin:0 auto;padding-block:32px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:40px}
@@ -199,6 +199,7 @@ figcaption p{margin:0;font-size:14px}
 /* FHD(1920×1080) 한 화면 맞춤: 3D 영역을 화면 높이 기준으로 */
 @media (min-width:761px){
   .wrap{padding-block:20px 64px}
+  .titleblock{padding-top:18px}
   .titleblock + section{margin-top:-30px}
   .grid4{row-gap:12px}
   .panel.base .stage{aspect-ratio:auto;height:clamp(240px,33vh,440px)}
@@ -681,16 +682,16 @@ applyTexts();
 window.__playVideo=function(body,u){const cands=[u];if(/^videos\//.test(u))cands.push(u.replace(/^videos\//,''));
   const v=document.createElement('video');v.controls=true;v.playsInline=true;v.preload='auto';let i=0;
   const msg=t=>{body.innerHTML='';const d=document.createElement('div');d.style.cssText='color:#fff;padding:16px;font-size:13px;line-height:1.6';d.textContent=t;body.appendChild(d);};
-  v.onerror=()=>{i++;if(i<cands.length){v.src=cands[i];v.load();return;}
+  v.onerror=()=>{i++;if(i<cands.length){v.src=encodeURI(cands[i]);v.load();return;}
     const code=v.error?v.error.code:0;
-    if(location.protocol==='file:'){msg('지금 파일을 더블클릭해서 연 상태예요('+location.pathname.split('/').slice(-2,-1)[0]+' 폴더). 이 폴더 안에 videos 폴더와 그 안의 mitek-rd.mp4가 있는지 확인해 주세요. (오류 코드 '+code+')');return;}
-    Promise.all(cands.map(c=>fetch(c,{method:'HEAD',cache:'no-store'}).then(r=>[c,r.status]).catch(()=>[c,0]))).then(rs=>{
+    if(location.protocol==='file:'){msg('지금 파일을 더블클릭해서 연 상태예요('+location.pathname.split('/').slice(-2,-1)[0]+' 폴더). 이 폴더 안에 '+cands[0]+' 파일이 있는지 확인해 주세요. (오류 코드 '+code+')');return;}
+    Promise.all(cands.map(c=>fetch(encodeURI(c),{method:'HEAD',cache:'no-store'}).then(r=>[c,r.status]).catch(()=>[c,0]))).then(rs=>{
       const found=rs.find(r=>r[1]===200);
       if(found)msg('영상 파일('+found[0]+')은 서버에 있는데 이 브라우저가 재생하지 못했어요. 다른 브라우저(크롬)로 열어 보세요. (오류 코드 '+code+')');
-      else msg('서버에서 영상 파일을 찾지 못했어요. 확인한 주소: '+rs.map(r=>new URL(r[0],location.href).href+' → '+(r[1]||'응답 없음')).join(' / ')+'. 저장소에 올라갔는지, 폴더·파일 이름(대소문자 포함)이 맞는지 확인해 주세요.');});};
+      else msg('서버에서 영상 파일을 찾지 못했어요. 확인한 주소: '+rs.map(r=>new URL(encodeURI(r[0]),location.href).href+' → '+(r[1]||'응답 없음')).join(' / ')+'. 저장소에 올라갔는지, 폴더·파일 이름(대소문자 포함)이 맞는지 확인해 주세요.');});};
   v.onloadeddata=()=>{const p=v.play();if(p&&p.catch)p.catch(()=>{v.muted=true;v.play().catch(()=>{});});};
-  v.src=cands[0];body.appendChild(v);return v;};
-(function(){const D={A:'videos/mitek-rd.mp4'};document.querySelectorAll('.vid-wrap').forEach(wr=>{const b=wr.querySelector('.vid-banner'),u=D[wr.dataset.vid];
+  v.src=encodeURI(cands[0]);body.appendChild(v);return v;};
+(function(){const D={A:'videos/mitek-rd.mp4',C:'videos/SeaDrive Pod 360.mp4'};document.querySelectorAll('.vid-wrap').forEach(wr=>{const b=wr.querySelector('.vid-banner'),u=D[wr.dataset.vid];
   if(!u){b.classList.add('empty');b.querySelector('.vid-hint').textContent='영상 준비 중';return;}
   b.onclick=()=>{if(window.__openPlayer)return;const w=document.createElement('div');w.className='vplayer';w.style.left='16px';w.style.bottom='16px';w.style.zIndex=70;
     const bar=document.createElement('div');bar.className='vbar';const t=document.createElement('span');t.textContent=wr.dataset.vid+'안 · '+wr.dataset.vname;bar.appendChild(t);
@@ -758,10 +759,10 @@ addBtn.onclick=()=>{const r=RD.push(RD.ref(db,ROOT+'/etc'));focusNew=r.key;if(!e
 RD.onValue(RD.ref(db,ROOT+'/etc'),s=>{const d=s.val();ETC={};if(d&&typeof d==='object')Object.keys(d).forEach(k=>{if(d[k]&&typeof d[k]==='object')ETC[k]=d[k];});renderEtc();},fail);
 
 /* ── 장비 영상: 빨간 배너 → 떠 있는 플레이어 (여러 개 동시 재생, 끌어서 이동) ── */
-const VID_DEFAULT={A:'videos/mitek-rd.mp4'};const VID={...VID_DEFAULT};const players={};let vz=60,vcount=0;
+const VID_DEFAULT={A:'videos/mitek-rd.mp4',C:'videos/SeaDrive Pod 360.mp4'};const VID={...VID_DEFAULT};const players={};let vz=60,vcount=0;
 function ytId(u){try{const x=new URL(u);if(/(^|\.)youtu\.be$/.test(x.hostname))return x.pathname.slice(1).split('/')[0];
   if(/(^|\.)youtube(-nocookie)?\.com$/.test(x.hostname)){if(x.searchParams.get('v'))return x.searchParams.get('v');const m=x.pathname.match(/\/(embed|shorts|live)\/([^/?]+)/);if(m)return m[2];}}catch(e){}return null;}
-function vidOk(u){if(typeof u!=='string')return false;if(/^videos\/[\w.-]+\.(mp4|webm)$/i.test(u))return true;if(!/^https:\/\//.test(u))return false;return !!ytId(u)||/\.(mp4|webm|mov)(\?|#|$)/i.test(u);}
+function vidOk(u){if(typeof u!=='string')return false;if(/^videos\/[\w .()-]+\.(mp4|webm)$/i.test(u))return true;if(!/^https:\/\//.test(u))return false;return !!ytId(u)||/\.(mp4|webm|mov)(\?|#|$)/i.test(u);}
 window.__openPlayer=true;
 function openPlayer(k,name,u){if(players[k]){players[k].style.zIndex=++vz;return;}
   const w=document.createElement('div');w.className='vplayer';w.style.zIndex=++vz;const off=(vcount++%4)*28;
